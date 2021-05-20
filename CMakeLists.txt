@@ -16,13 +16,13 @@ if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 # version information
-if(NOT DEFINED Deamer_VERSION_MAJOR)
+if(NOT DEFINED Deamer_External_VERSION_MAJOR)
   set(Deamer_External_VERSION_MAJOR 1)
 endif()
-if(NOT DEFINED Deamer_VERSION_MINOR)
+if(NOT DEFINED Deamer_External_VERSION_MINOR)
   set(Deamer_External_VERSION_MINOR 0)
 endif()
-if(NOT DEFINED Deamer_VERSION_PATCH)
+if(NOT DEFINED Deamer_External_VERSION_PATCH)
   set(Deamer_External_VERSION_PATCH 0)
 endif()
 
@@ -34,13 +34,6 @@ if(Doxygen_FOUND)
 	add_subdirectory(docs)
 else()
 	message(STATUS "Doxygen not found, not building docs")
-endif()
-
-
-option(EXAMPLES "Build the examples" OFF)
-if(EXAMPLES)
-	message(STATUS "Examples can now be build")
-	add_subdirectory(examples)
 endif()
 
 option(PACKAGE_TESTS "Build the tests" ON)
