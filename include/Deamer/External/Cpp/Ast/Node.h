@@ -189,11 +189,37 @@ namespace deamer::external::cpp::ast
 
 			return foundNodes;
 		}
+		
+		const Node* Get(size_t index) const
+		{
+			if (index >= nodes.size())
+			{
+				throw std::logic_error("There is no child at the specified index!");
+			}
 
+			return nodes[index];
+		}
+		
 		template<typename T>
 		const Node* Get(T t, size_t index) const
 		{
 			return Get(t)[index];
+		}
+
+		/*!	\fn GetObject
+		 *
+		 *	\brief Returns the first child-object that has the given type.
+		 */
+		template<typename T>
+		const Node* GetObject(T t) const
+		{
+			const auto result = Get(t);
+			if (result.empty())
+			{
+				throw std::logic_error("There is no child with the given type.");
+			}
+
+			return result[0];
 		}
 
 		/*!	\fn GetMatchedProductionRule
@@ -248,16 +274,46 @@ namespace deamer::external::cpp::ast
 			return information.type;
 		}
 
+		/*!	\fn GetValue
+		 *
+		 *	\brief Returns the value of this node.
+		 */
 		std::string GetValue() const
 		{
 			return information.value;
 		}
 
+		/*!	\fn GetChildValue
+		 *
+		 *	\brief Retrieves the value of the specified child type.
+		 */
+		template<typename T>
+		std::string GetChildValue(T t) const
+		{
+			const auto* const child = GetObject(t);
+			return child->GetValue();
+		}
+		
+		std::string GetChildValue(size_t index = 0) const
+		{
+			const auto* const child = Get(index);
+			return child->GetValue();
+		}
+
+		/*!	\fn GetParent
+		 *
+		 *	\brief Returns the parent of this node.
+		 */
 		const Node* GetParent() const
 		{
 			return information.parent;
 		}
 
+		/*!	\fn Accept
+		 *
+		 *	\brief This function is used to allow graphtraversers, to traverse the tree under this node,
+		 *	including this node.
+		 */
 		virtual void Accept(GraphTraverser& traverser) const
 		{
 			traverser.Dispatch(this);
