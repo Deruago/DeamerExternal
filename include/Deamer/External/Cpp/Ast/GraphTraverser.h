@@ -13,7 +13,7 @@ namespace deamer::external::cpp::ast
 		virtual ~GraphTraverser() = default;
 
 	public:
-		virtual void Dispatch(const Node* node) const = 0;
+		virtual void Dispatch(const Node* node) = 0;
 	};
 }
 

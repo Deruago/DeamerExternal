@@ -258,7 +258,7 @@ namespace deamer::external::cpp::ast
 			return information.parent;
 		}
 
-		virtual void Accept(const GraphTraverser& traverser) const
+		virtual void Accept(GraphTraverser& traverser) const
 		{
 			traverser.Dispatch(this);
 		}
