@@ -79,4 +79,4 @@ Deamer External is mainly an Apache-2.0 library. To see what licenses the follow
 
 "Deamer External" source code is released under Apache License 2.0.
 
-Check [LICENSE]() files for more information.
+Check [LICENSE](https://github.com/Deruago/DeamerExternal/blob/master/LICENSE) files for more information.

@@ -1,3 +1,23 @@
+/*
+ * Copyright 2021 Thimo Bohmer
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http ://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissionsand
+ * limitations under the License.
+ */
+/*
+ * Part of the Deamer External.
+ * For more information go to: https://github.com/Deruago/DeamerExternal
+ */
+
 #include <Deamer/External/Cpp/Ast/Node.h>
 #include <gtest/gtest.h>
 
@@ -57,7 +77,7 @@ TEST_F(TestNode, CreateNodeWithNoNodes)
 
 TEST_F(TestNode, CreateNodeWith1Nodes)
 {
-	const auto actual = deamer::external::cpp::ast::Node(defaultNodeInformation, {node1});
+	const auto actual = deamer::external::cpp::ast::Node(defaultNodeInformation, { node1 });
 
 	EXPECT_EQ(0, actual.GetColumnNumber());
 	EXPECT_EQ(0, actual.GetLineNumber());
@@ -83,7 +103,7 @@ TEST_F(TestNode, CreateNodeWith1Nodes)
 
 TEST_F(TestNode, CreateNodeWith2Nodes)
 {
-	const auto actual = deamer::external::cpp::ast::Node(defaultNodeInformation, {node1, node2});
+	const auto actual = deamer::external::cpp::ast::Node(defaultNodeInformation, { node1, node2 });
 
 	EXPECT_EQ(0, actual.GetColumnNumber());
 	EXPECT_EQ(0, actual.GetLineNumber());
@@ -109,7 +129,7 @@ TEST_F(TestNode, CreateNodeWith2Nodes)
 TEST_F(TestNode, CreateNodeWith3Nodes)
 {
 	const auto actual =
-		deamer::external::cpp::ast::Node(defaultNodeInformation, {node1, node2, node3});
+		deamer::external::cpp::ast::Node(defaultNodeInformation, { node1, node2, node3 });
 
 	EXPECT_EQ(0, actual.GetColumnNumber());
 	EXPECT_EQ(0, actual.GetLineNumber());
@@ -134,7 +154,7 @@ TEST_F(TestNode, CreateNodeWith3Nodes)
 TEST_F(TestNode, CreateNodeWith4Nodes)
 {
 	const auto actual =
-		deamer::external::cpp::ast::Node(defaultNodeInformation, {node1, node2, node3, node4});
+		deamer::external::cpp::ast::Node(defaultNodeInformation, { node1, node2, node3, node4 });
 
 	EXPECT_EQ(0, actual.GetColumnNumber());
 	EXPECT_EQ(0, actual.GetLineNumber());
