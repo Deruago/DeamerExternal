@@ -6,7 +6,7 @@ Deamer External is used by the output Deamer Project generates. As this library 
 
 Deamer External makes varies things easier to do:
 
-- Sharing your project, users don't require the full project to compile and run your generated language.
+- Sharing your project, users don't require the complete [Deamer Project](https://github.com/Deruago/theDeamerProject) to compile and run your generated language.
 - Licensing generated code.
 - Expand the external dependencies.
 
