@@ -176,7 +176,7 @@ namespace deamer::external::cpp::ast
 		 *
 		 *	\brief Gets all nodes underlying this node.
 		 *
-		 *	\details Will give a vector of base node types.
+		 *	\details Will give a vector of const base node types.
 		 */
 		std::vector<const Node*> GetNodes() const
 		{
@@ -187,6 +187,19 @@ namespace deamer::external::cpp::ast
 			}
 
 			return nodesRe;
+		}
+
+		/*!	\fn GetMutableNodes
+		 *
+		 *	\brief Gets all nodes underlying this node.
+		 *
+		 *	\details Will give a vector of base node types.
+		 *	This function should only be used whenever mutable objects are required.
+		 *	E.g. when you need to optimize the CST/AST.
+		 */
+		std::vector<Node*> GetMutableNodes() const
+		{
+			return nodes;
 		}
 
 		/*!	\fn Get
@@ -236,7 +249,7 @@ namespace deamer::external::cpp::ast
 			const auto result = Get(t);
 			if (result.empty())
 			{
-				throw std::logic_error("There is no child with the given type.");
+				throw std::logic_error("There is no child with the given type: " + ::std::to_string(static_cast<::std::size_t>(t)));
 			}
 
 			return result[0];
@@ -329,6 +342,31 @@ namespace deamer::external::cpp::ast
 			return information.parent;
 		}
 
+		/*!	\fn GetText
+		 * 
+		 *	\brief Converts the underlying tree into the captured text.
+		 *
+		 *	\note Using an AST can give incorrect text, as certain text has been removed.
+		 *	However using a CST will guarantee that the original text is returned.
+		 */
+		::std::string GetText() const
+		{
+			::std::string text;
+			if (!GetNodes().empty())
+			{
+				for (const auto* node : GetNodes())
+				{
+					text += node->GetText();
+				}
+			}
+			else
+			{
+				text += GetValue();
+			}
+
+			return text;
+		}
+
 		/*!	\fn Accept
 		 *
 		 *	\brief This function is used to allow graphtraversers, to traverse the tree under this node,
@@ -337,6 +375,40 @@ namespace deamer::external::cpp::ast
 		virtual void Accept(GraphTraverser& traverser) const
 		{
 			traverser.Dispatch(this);
+		}
+
+		/*!	\fn Accept
+		 *
+		 *	\brief This function is used to allow graphtraversers, to traverse the tree under this node,
+		 *	including this node.
+		 */
+		virtual void Accept(GraphTraverser& traverser)
+		{
+			traverser.Dispatch(this);
+		}
+
+		/*!	\Accept
+		 * 
+		 *	\brief This is called whenever some external visitor is used.
+		 * 
+		 *	\tparam type Used to specify the type of the visitor 
+		 */
+		template<typename type>
+		void Accept(type& visitor) const
+		{
+			visitor.Dispatch(this);
+		}
+
+		/*!	\Accept
+		 *
+		 *	\brief This is called whenever some external visitor is used.
+		 *
+		 *	\tparam type Used to specify the type of the visitor
+		 */
+		template<typename type>
+		void Accept(type& visitor)
+		{
+			visitor.Dispatch(this);
 		}
 	};
 }
