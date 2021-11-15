@@ -223,6 +223,11 @@ namespace deamer::external::cpp::ast
 			return foundNodes;
 		}
 		
+		
+		/*!	\fn Get
+		 *	
+		 *	\see GetIndex
+		 */
 		const Node* Get(size_t index) const
 		{
 			if (index >= nodes.size())
@@ -233,8 +238,29 @@ namespace deamer::external::cpp::ast
 			return nodes[index];
 		}
 		
+		const Node* GetIndex(size_t index) const
+		{
+			return Get(index);
+		}
+		
+		const Node* GetIndex(int index) const
+		{
+			if (index >= nodes.size() || index < 0)
+			{
+				throw std::logic_error("There is no child at the specified index!");
+			}
+
+			return nodes[index];
+		}
+		
 		template<typename T>
 		const Node* Get(T t, size_t index) const
+		{
+			return Get(t)[index];
+		}
+		
+		template<typename T>
+		const Node* Get(T t, int index) const
 		{
 			return Get(t)[index];
 		}
@@ -327,9 +353,24 @@ namespace deamer::external::cpp::ast
 			return child->GetValue();
 		}
 		
+		/*!	\fn GetChildValue
+		 *	
+		 *	\see GetChildValueAtIndex
+		 */
 		std::string GetChildValue(size_t index = 0) const
 		{
-			const auto* const child = Get(index);
+			const auto* const child = GetIndex(index);
+			return child->GetValue();
+		}
+		
+		std::string GetChildValueAtIndex(size_t index = 0) const
+		{
+			return GetChildValue(index);
+		}
+		
+		std::string GetChildValueAtIndex(int index = 0) const
+		{
+			const auto* const child = GetIndex(index);
 			return child->GetValue();
 		}
 
