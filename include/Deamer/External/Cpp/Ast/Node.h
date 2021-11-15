@@ -176,7 +176,7 @@ namespace deamer::external::cpp::ast
 		 *
 		 *	\brief Gets all nodes underlying this node.
 		 *
-		 *	\details Will give a vector of base node types.
+		 *	\details Will give a vector of const base node types.
 		 */
 		std::vector<const Node*> GetNodes() const
 		{
@@ -187,6 +187,19 @@ namespace deamer::external::cpp::ast
 			}
 
 			return nodesRe;
+		}
+
+		/*!	\fn GetMutableNodes
+		 *
+		 *	\brief Gets all nodes underlying this node.
+		 *
+		 *	\details Will give a vector of base node types.
+		 *	This function should only be used whenever mutable objects are required.
+		 *	E.g. when you need to optimize the CST/AST.
+		 */
+		std::vector<Node*> GetMutableNodes() const
+		{
+			return nodes;
 		}
 
 		/*!	\fn Get
@@ -210,6 +223,11 @@ namespace deamer::external::cpp::ast
 			return foundNodes;
 		}
 		
+		
+		/*!	\fn Get
+		 *	
+		 *	\see GetIndex
+		 */
 		const Node* Get(size_t index) const
 		{
 			if (index >= nodes.size())
@@ -220,8 +238,29 @@ namespace deamer::external::cpp::ast
 			return nodes[index];
 		}
 		
+		const Node* GetIndex(size_t index) const
+		{
+			return Get(index);
+		}
+		
+		const Node* GetIndex(int index) const
+		{
+			if (index >= nodes.size() || index < 0)
+			{
+				throw std::logic_error("There is no child at the specified index!");
+			}
+
+			return nodes[index];
+		}
+		
 		template<typename T>
 		const Node* Get(T t, size_t index) const
+		{
+			return Get(t)[index];
+		}
+		
+		template<typename T>
+		const Node* Get(T t, int index) const
 		{
 			return Get(t)[index];
 		}
@@ -236,7 +275,7 @@ namespace deamer::external::cpp::ast
 			const auto result = Get(t);
 			if (result.empty())
 			{
-				throw std::logic_error("There is no child with the given type.");
+				throw std::logic_error("There is no child with the given type: " + ::std::to_string(static_cast<::std::size_t>(t)));
 			}
 
 			return result[0];
@@ -314,9 +353,24 @@ namespace deamer::external::cpp::ast
 			return child->GetValue();
 		}
 		
+		/*!	\fn GetChildValue
+		 *	
+		 *	\see GetChildValueAtIndex
+		 */
 		std::string GetChildValue(size_t index = 0) const
 		{
-			const auto* const child = Get(index);
+			const auto* const child = GetIndex(index);
+			return child->GetValue();
+		}
+		
+		std::string GetChildValueAtIndex(size_t index = 0) const
+		{
+			return GetChildValue(index);
+		}
+		
+		std::string GetChildValueAtIndex(int index = 0) const
+		{
+			const auto* const child = GetIndex(index);
 			return child->GetValue();
 		}
 
@@ -329,6 +383,31 @@ namespace deamer::external::cpp::ast
 			return information.parent;
 		}
 
+		/*!	\fn GetText
+		 * 
+		 *	\brief Converts the underlying tree into the captured text.
+		 *
+		 *	\note Using an AST can give incorrect text, as certain text has been removed.
+		 *	However using a CST will guarantee that the original text is returned.
+		 */
+		::std::string GetText() const
+		{
+			::std::string text;
+			if (!GetNodes().empty())
+			{
+				for (const auto* node : GetNodes())
+				{
+					text += node->GetText();
+				}
+			}
+			else
+			{
+				text += GetValue();
+			}
+
+			return text;
+		}
+
 		/*!	\fn Accept
 		 *
 		 *	\brief This function is used to allow graphtraversers, to traverse the tree under this node,
@@ -337,6 +416,40 @@ namespace deamer::external::cpp::ast
 		virtual void Accept(GraphTraverser& traverser) const
 		{
 			traverser.Dispatch(this);
+		}
+
+		/*!	\fn Accept
+		 *
+		 *	\brief This function is used to allow graphtraversers, to traverse the tree under this node,
+		 *	including this node.
+		 */
+		virtual void Accept(GraphTraverser& traverser)
+		{
+			traverser.Dispatch(this);
+		}
+
+		/*!	\Accept
+		 * 
+		 *	\brief This is called whenever some external visitor is used.
+		 * 
+		 *	\tparam type Used to specify the type of the visitor 
+		 */
+		template<typename type>
+		void Accept(type& visitor) const
+		{
+			visitor.Dispatch(this);
+		}
+
+		/*!	\Accept
+		 *
+		 *	\brief This is called whenever some external visitor is used.
+		 *
+		 *	\tparam type Used to specify the type of the visitor
+		 */
+		template<typename type>
+		void Accept(type& visitor)
+		{
+			visitor.Dispatch(this);
 		}
 	};
 }

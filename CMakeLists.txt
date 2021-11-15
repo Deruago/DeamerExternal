@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 
-project(Deamer_External VERSION 1.0
+project(Deamer_External VERSION 1.1
                   DESCRIPTION "Deamer CC output dependencies."
                   LANGUAGES CXX)
 
@@ -20,7 +20,7 @@ if(NOT DEFINED Deamer_External_VERSION_MAJOR)
   set(Deamer_External_VERSION_MAJOR 1)
 endif()
 if(NOT DEFINED Deamer_External_VERSION_MINOR)
-  set(Deamer_External_VERSION_MINOR 0)
+  set(Deamer_External_VERSION_MINOR 1)
 endif()
 if(NOT DEFINED Deamer_External_VERSION_PATCH)
   set(Deamer_External_VERSION_PATCH 0)
