@@ -24,6 +24,7 @@
 #include <iostream>
 #include <string>
 #include <utility>
+#include <cstddef>
 
 namespace deamer::external::cpp::lexer
 {
@@ -34,13 +35,15 @@ namespace deamer::external::cpp::lexer
 	class TerminalObject
 	{
 	public:
+		const std::size_t Type;
 		const std::string Value;
 		const int LineNumber;
 		const int ColumnNumber;
 
 	public:
-		TerminalObject(std::string value_, const int lineNumber_ = -1, const int columnNumber_ = -1)
-			: Value(std::move(value_)),
+		TerminalObject(std::string value_, const int lineNumber_ = -1, const int columnNumber_ = -1, std::size_t type_ = 0)
+			: Type(type_),
+			  Value(std::move(value_)),
 			  LineNumber(lineNumber_),
 			  ColumnNumber(columnNumber_)
 		{
