@@ -1,4 +1,5 @@
 #include "Deamer/External/Cpp/Tool/OopSyntaxRecognizer/Type/EnumObject.h"
+#include <algorithm>
 
 deamer::external::cpp::tool::oopsyntaxrecognizer::EnumObject::EnumObject(const std::string& type_)
 	: Type(TypeCategory::enumobject, type_)
