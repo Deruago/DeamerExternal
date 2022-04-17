@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissionsand
  * limitations under the License.
  */
- /*
-  * Part of the Deamer External.
-  * For more information go to: https://github.com/Deruago/DeamerExternal
-  */
+/*
+ * Part of the Deamer External.
+ * For more information go to: https://github.com/Deruago/DeamerExternal
+ */
 
 #ifndef DEAMER_EXTERNAL_LEXER_INTERFACE_LEXER_H
 #define DEAMER_EXTERNAL_LEXER_INTERFACE_LEXER_H
 
+#include "Deamer/External/Cpp/Lexer/Interface/TerminalConstructionPolicy.h"
 #include "Deamer/External/Cpp/Lexer/TerminalObject.h"
 #include <string>
 #include <vector>
@@ -34,7 +35,16 @@ namespace deamer::external::cpp::lexer
 		virtual ~Lexer() = default;
 
 	public:
-		virtual std::vector<const TerminalObject*> Tokenize(const std::string& text) const = 0;
+		virtual std::vector<const TerminalObject*> Tokenize(const std::string& text) const
+		{
+			return Tokenize(text, TerminalConstructionPolicy::ignore_deleted_terminals);
+		}
+
+		virtual std::vector<const TerminalObject*>
+		Tokenize(const std::string& text, TerminalConstructionPolicy constructionPolicy) const
+		{
+			throw std::logic_error("Lexer.Tokenize(text, constructionPolicy), Not Implemented");
+		}
 	};
 }
 
