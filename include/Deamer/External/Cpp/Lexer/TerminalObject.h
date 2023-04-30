@@ -56,6 +56,26 @@ namespace deamer::external::cpp::lexer
 			std::cout << "Value: " << Value << " Line number: " << LineNumber
 					  << " ColumnNumber: " << ColumnNumber << "\n";
 		}
+
+		std::size_t GetType() const
+		{
+			return Type;
+		}
+
+		std::string GetValue() const
+		{
+			return Value;
+		}
+
+		int GetLineNumber() const
+		{
+			return LineNumber;
+		}
+
+		int GetColumnNumber() const
+		{
+			return ColumnNumber;
+		}
 	};
 }
 

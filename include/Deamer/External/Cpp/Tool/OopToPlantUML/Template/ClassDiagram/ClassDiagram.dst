@@ -1,0 +1,16 @@
+@startuml
+
+{{class_declaration.Variable_Field}}
+
+{{interface_declaration.Variable_Field}}
+
+{{abstract_declaration.Variable_Field}}
+
+{{enumeration_declaration.Variable_Field}}
+
+{{inheritance_relation.Variable_Field}}
+{{interface_realisation.Variable_Field}}
+
+{{association_relation.Variable_Field}}
+
+@enduml

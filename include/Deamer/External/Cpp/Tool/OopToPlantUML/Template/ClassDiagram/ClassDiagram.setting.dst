@@ -1,0 +1,42 @@
+{{file.target_language}} = <C++>
+{{file.file_name}} = <ClassDiagram>
+{{file.namespace}} = <deamer::external::cpp::tool::ooptoplantuml>
+{{file.extension}} = <h>
+
+{{class_declaration}} =
+@<class {{type_name}}
+{
+{{property.Variable_Field}}
+
+{{function.Variable_Field}}
+}>@
+
+{{interface_declaration}} =
+@<interface {{type_name}}
+{
+{{function.Variable_Field}}
+}>@
+
+{{abstract_declaration}} =
+@<abstract {{type_name}}
+{
+{{property.Variable_Field}}
+
+{{function.Variable_Field}}
+}>@
+
+{{enumeration_declaration}} =
+@<enum {{type_name}}
+{
+{{enum_member.Variable_Field}}
+}>@
+
+{{enum_member}} = @<{{enum_name}}>@
+{{property}} = @<{{property_type}} {{property_name}}>@
+{{function}} = @<{{function_type}} {{function_name}}({{function_argument.Variable_Field}})>@
+{{function_argument}} = @<{{optional_comma}}{{function_argument_name}} {{function_argument_type}}>@
+{{optional_comma}} = @<>@
+
+{{inheritance_relation}} = @<{{type_category}} {{type_name_lhs}} extends {{type_name_rhs}}>@
+{{interface_realisation}} = @<{{type_category}} {{type_name_lhs}} implements {{type_name_rhs}}>@
+{{association_relation}} = @<{{type_name_lhs}} ---> {{type_name_rhs}}>@
